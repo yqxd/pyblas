@@ -5,6 +5,11 @@
 #include "clib.h"
 #include "tools.h"
 
+// DIM
+int DIM_M(int x, int y, int lda) {return y*lda + x;}
+int DIM_V(int x, int lda) {return x*lda;}
+int DIM_N(int x) {return x;}
+
 // initialize random matrix A
 void Init_rand(int m, int n, double *A, int ldA)
 {
