@@ -23,3 +23,6 @@ def To_file(m, n, A, lda, matrix):
 
 
 
+alpha = 1.5
+beta = 2.5
+gamma = 3.5

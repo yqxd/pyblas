@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
     From_file(m, n, B, ldb, ".././data/B");
     From_file(m, n, C, ldc, ".././data/C");
     From_file(m, 1, a, inca, ".././data/a");
-    From_file(m, 1, C, incb, ".././data/b");
-    From_file(m, 1, C, incc, ".././data/c");
+    From_file(m, 1, b, incb, ".././data/b");
+    From_file(m, 1, c, incc, ".././data/c");
     if (strcmp(argv[1], "dasum") == 0)
         test_dasum_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c);
     return 0;

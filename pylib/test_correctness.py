@@ -25,4 +25,3 @@ From_file(m, n, C, ldc, data_prefix + "C")
 From_file(m, 1, a, inca, data_prefix + "a")
 From_file(m, 1, b, incb, data_prefix + "b")
 From_file(m, 1, c, incc, data_prefix + "c")
-

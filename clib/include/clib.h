@@ -6,10 +6,13 @@ extern "C"{
 #endif
 
 // double
-extern double dasum_(int *, double [], int *, int); 
+extern double dasum_(int *, double [], int *, int);
+extern void daxpy_(int *, double *, double [], int *, double [], int *, int);
 
 // test
 void test_dasum_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, int incc,
+                double* A, double* B, double *C, double *a, double *b, double *c);
+void test_daxpy_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, int incc,
                 double* A, double* B, double *C, double *a, double *b, double *c);
 
 #ifdef __cplusplus
