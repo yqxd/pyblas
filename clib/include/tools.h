@@ -1,6 +1,7 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 
+//
 int DIM_M(int x, int y, int lda);
 int DIM_V(int x, int lda);
 int DIM_N(int x);

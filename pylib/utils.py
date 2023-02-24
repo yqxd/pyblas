@@ -1,4 +1,5 @@
 from numpy import *
+from typing import *
 data_prefix = "/home/zyxu/_projects_/PyBLAS/data/"
 
 DIM = lambda x, y, lda: y*lda + x
