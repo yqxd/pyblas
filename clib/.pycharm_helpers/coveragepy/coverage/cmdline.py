@@ -68,7 +68,7 @@ class Opts(object):
         ),
     )
     pylib = optparse.make_option(
-        '-L', '--pylib', action='store_true',
+        '-L', '--pyblas', action='store_true',
         help=(
             "Measure coverage even inside the Python installed library, "
             "which isn't done by default."
@@ -602,7 +602,7 @@ class CoverageScript(object):
         if options.concurrency == "multiprocessing":
             # Can't set other run-affecting command line options with
             # multiprocessing.
-            for opt_name in ['branch', 'include', 'omit', 'pylib', 'source', 'timid']:
+            for opt_name in ['branch', 'include', 'omit', 'pyblas', 'source', 'timid']:
                 # As it happens, all of these options have no default, meaning
                 # they will be None if they have not been specified.
                 if getattr(options, opt_name) is not None:

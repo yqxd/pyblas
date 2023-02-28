@@ -22,6 +22,7 @@ double work[100000];
 int ipiv[10000];
 int info;
 
+
 // level 1 blas
 void test_daxpy_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, int incc,
                 double* A, double* B, double *C, double *a, double *b, double *c)
@@ -93,12 +94,11 @@ void test_dgetrf_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, i
     double* output_A = (double*)malloc(m*n*sizeof(double));
     From_file(m, n, output_A, lda, "../data/output/dgetrf_A");
     int* output_ipiv = (int*)malloc(min(m,n)*sizeof(int));
-    From_file_int(min(m,n), 1, output_ipiv, 1, "../data/output/dgetrf_ipiv");
 
     dgetrf_(&m, &n, A, &lda, ipiv, &info, 1);
     Matrix_add(m, n, -1, output_A, A, lda, ldb);
 
-    double* output = (double*)malloc(1*sizeof(double));
-    *output = dlange_(&F, &m, &n, A, &lda, work, 1);
-    printf("%E", *output);
+    double* error = (double*)malloc(1*sizeof(double));
+    *error = dlange_(&F, &m, &n, A, &lda, work, 1);
+    printf("\n%E\n", *error);
 }
