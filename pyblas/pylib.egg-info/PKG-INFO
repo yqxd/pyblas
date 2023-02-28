@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: pylib
+Version: 0.1
+Home-page: https://github.com/yqxd/pyblas
+Author: Zhenyu Xu
+Author-email: 22210980117@m.fudan.edu.cn
+License: FDU Licence
+Keywords: data,pylib
+Platform: any
+
+lapack implement for python
