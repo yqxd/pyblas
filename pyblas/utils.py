@@ -32,8 +32,3 @@ def To_file(m, n, A, lda, matrix):
                 f.write("%10.8E" % A[DIM(i, j, lda)])
                 if i != m - 1 or j != n - 1:
                     f.write(" ")
-
-
-alpha = 1.5
-beta = 2.5
-gamma = 3.5

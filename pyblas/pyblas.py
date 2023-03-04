@@ -123,7 +123,7 @@ def dtrsm_(SIDE, UPLO, TRANSA, DIAG, m, n, alpha, A, lda, B, ldb, h1=1, h2=1, h3
         raise Exception()
     for i in range(m):
         for j in range(n):
-            B[DIM(i, j, ldb)] = new_B[i, j]
+            B[DIM(i, j, ldb)] = X[i, j]
 
 
 def test_dtrsm_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c):

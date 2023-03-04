@@ -97,12 +97,12 @@ void test_dtrsm_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, in
 {
     double* output_B = (double*)malloc(m*n*sizeof(double));
     From_file(m, n, output_B, ldb, "../data/output/dtrsm");
-
     dtrsm_(SIDE, UPLO, TRANSA, DIAG, &m, &n, &alpha, A, &lda, B, &ldb, 1, 1, 1, 1);
     Matrix_add(m, n, -1, output_B, B, lda, ldb);
 
     double* error = (double*)malloc(1*sizeof(double));
     *error = dlange_(&F, &m, &n, B, &ldb, work, 1);
+
     printf("\n%E\n", *error);
 }
 
