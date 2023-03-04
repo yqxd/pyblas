@@ -14,6 +14,10 @@ char M = 'M';
 char F = 'F';
 char O = 'O';
 char I = 'I';
+char* SIDE = "R";
+char* UPLO = "U";
+char* TRANSA = "N";
+char* DIAG = "N";
 
 double alpha = 1.5;
 double beta = 2.5;
@@ -88,6 +92,20 @@ void test_dlange_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, i
 }
 
 // level 3 blas
+void test_dtrsm_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, int incc,
+                double* A, double* B, double *C, double *a, double *b, double *c)
+{
+    double* output_B = (double*)malloc(m*n*sizeof(double));
+    From_file(m, n, output_B, ldb, "../data/output/dtrsm");
+
+    dtrsm_(SIDE, UPLO, TRANSA, DIAG, &m, &n, &alpha, A, &lda, B, &ldb, 1, 1, 1, 1);
+    Matrix_add(m, n, -1, output_B, B, lda, ldb);
+
+    double* error = (double*)malloc(1*sizeof(double));
+    *error = dlange_(&F, &m, &n, B, &ldb, work, 1);
+    printf("\n%E\n", *error);
+}
+
 void test_dgetrf_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, int incc,
                 double* A, double* B, double *C, double *a, double *b, double *c)
 {
@@ -97,6 +115,8 @@ void test_dgetrf_(int m, int n, int lda, int ldb, int ldc, int inca, int incb, i
 
     dgetrf_(&m, &n, A, &lda, ipiv, &info, 1);
     Matrix_add(m, n, -1, output_A, A, lda, ldb);
+
+    printf("\nasd %d asd \n", ipiv[0]);
 
     double* error = (double*)malloc(1*sizeof(double));
     *error = dlange_(&F, &m, &n, A, &lda, work, 1);

@@ -27,3 +27,9 @@ From_file(m, 1, c, incc, data_prefix + "c")
 
 work = zeros(m + n)
 ipiv = zeros(min(m, n), dtype=int)
+
+
+SIDE = 'R'
+UPLO = 'U'
+TRANSA = 'N'
+DIAG = 'N'

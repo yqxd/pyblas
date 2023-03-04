@@ -1,3 +1,3 @@
 #! /bin/bash
 make clean; make;
-./test/test_correctness.x dgetrf
+./test/test_correctness.x dtrsm

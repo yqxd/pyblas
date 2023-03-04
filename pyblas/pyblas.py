@@ -84,23 +84,70 @@ def test_dlange_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c):
 
 
 # level 3 lapack
+# triangular solve multiple rhs, TX = αB
+def dtrsm_(SIDE, UPLO, TRANSA, DIAG, m, n, alpha, A, lda, B, ldb, h1=1, h2=1, h3=1, h4=1):
+    if SIDE == 'L':
+        new_A = zeros((m, m))
+    elif SIDE == 'R':
+        new_A = zeros((n, n))
+    else:
+        raise Exception()
+    if UPLO == 'U':
+        for i in range(new_A.shape[0]):
+            for j in range(i, new_A.shape[1]):
+                new_A[i, j] = A[DIM(i, j, lda)]
+    elif UPLO == 'L':
+        for i in range(new_A.shape[0]):
+            for j in range(new_A.shape[1], i + 1):
+                new_A[i, j] = A[DIM(i, j, lda)]
+    else:
+        raise Exception()
+    if DIAG == 'U':
+        for i in range(new_A.shape[0]):
+            new_A[i, i] = 1
+    elif DIAG != 'N':
+        raise Exception
+    new_B = zeros((m, n))
+    for i in range(m):
+        for j in range(n):
+            new_B[i, j] = B[DIM(i, j, ldb)]
+    if TRANSA == 'C' or TRANSA == 'T':
+        new_A = new_A.T
+    elif TRANSA != 'N':
+        raise Exception()
+    if SIDE == 'L':
+        X = alpha * linalg.solve(new_A, new_B)
+    elif SIDE == 'R':
+        X = alpha * linalg.solve(new_A.T, new_B.T).T
+    else:
+        raise Exception()
+    for i in range(m):
+        for j in range(n):
+            B[DIM(i, j, ldb)] = new_B[i, j]
+
+
+def test_dtrsm_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c):
+    dtrsm_(SIDE, UPLO, TRANSA, DIAG, m, n, alpha, A, lda, B, ldb)
+    To_file(m, n, B, ldb, data_prefix + "output/dtrsm")
+
+
 # LU factorization
 def dgetrf_(m, n, A, lda, ipiv, info, h1=None):
-    # A = deepcopy(A_ori)
-    for i in range(min(m, n)):
-        ipiv[i] = idamax_(m - i, A[DIM(i, i, lda):], 1) + i - 1
+    new_A = zeros((m, n))
+    for i in range(m):
         for j in range(n):
-            tmp = A[DIM(i, j, lda)]
-            A[DIM(i, j, lda)] = A[DIM(ipiv[i], j, lda)]
-            A[DIM(ipiv[i], j, lda)] = tmp
-        for j in range(i + 1, n):
-            A[DIM(j, i, lda)] /= A[DIM(i, i, lda)]
-            for k in range(i + 1, n):
-                A[DIM(j, k, lda)] -= A[DIM(j, i, lda)] * A[DIM(i, k, lda)]
-        ipiv[i] += 1
+            new_A[i, j] = A[DIM(i, j, lda)]
+    output_A, output_ipiv, info = lapack.dgetrf(new_A)
+    for i in range(m):
+        for j in range(n):
+            A[DIM(i, j, lda)] = output_A[i, j]
+    for i in range(min(m, n)):
+        ipiv[i] = output_ipiv[i]
+    ipiv += 1
 
 
 def test_dgetrf_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c):
     dgetrf_(m, n, A, lda, ipiv, info, h1=None)
     To_file(min(m, n), 1, ipiv, 1, data_prefix + "output/dgetrf_ipiv")
     To_file(m, n, A, lda, data_prefix + "output/dgetrf_A")
+

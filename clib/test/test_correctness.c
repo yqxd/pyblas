@@ -40,7 +40,9 @@ int main(int argc, char *argv[])
         test_dlange_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c);
 
     // blas 3
-    if (strcmp(argv[1], "dgetrf") == 0)
+    if (strcmp(argv[1], "dtrsm") == 0)
+        test_dtrsm_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c);
+    else if (strcmp(argv[1], "dgetrf") == 0)
         test_dgetrf_(m, n, lda, ldb, ldc, inca, incb, incc, A, B, C, a, b, c);
 
     return 0;
